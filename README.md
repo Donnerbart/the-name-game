@@ -16,8 +16,8 @@ System.out.println(new TheNameGame(baseNames, fillIns, characterNames));
 ````
 
 ... you will create an output like this:
-
-`The name game!
+````
+The name game!
 
 Judy! Judy, Judy bo
 Budy Banana fanna fo
@@ -69,4 +69,4 @@ Bit Banana fanna fo
 Fit fee fy mo
 Mit, Kit!
 
-The name game!`
+The name game!````
