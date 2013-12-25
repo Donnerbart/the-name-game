@@ -1,3 +1,6 @@
+import java.util.Formatter;
+import java.util.Locale;
+
 public class TheNameGame
 {
 	private final String[] baseNames;
@@ -8,6 +11,7 @@ public class TheNameGame
 	private final String[] baseWords;
 	
 	private final StringBuilder song;
+	private final Formatter formatter;
 
 	/**
 	 * Generates the name game song with the gives parameters.
@@ -46,6 +50,7 @@ public class TheNameGame
 		}
 		
 		song = new StringBuilder();
+		formatter = new Formatter(song, Locale.ENGLISH);
 		
 		doTheNameGame();
 	}
@@ -69,35 +74,32 @@ public class TheNameGame
 		
 		add("The first letter of the name,").nl();
 		add("I treat it like it wasn't there").nl();
-		add("But a ").baseFirstChar(0).add(" or an ").baseFirstChar(1).nl();
-		add("or an ").baseFirstChar(2).add(" will appear.").np();
+		add("But a %s or an %s", baseFirstChars[0], baseFirstChars[1]).nl();
+		add("or an %s will appear.", baseFirstChars[2]).np();
 		
-		add("And then I say ").baseWord(0).add(" add a ").baseFirstChar(0).add(" then I say the name and ").add(fillIns[0]).add(" and a ").baseWord(1).add(".").nl();
-		add("And then I say the name again with an ").baseFirstChar(1).add(" very plain and a ").add(fillIns[1]).add(" and a ").baseWord(2).add(".").nl();
-		add("And then I say the name again with an ").baseFirstChar(2).add(" this time").nl();
+		add("And then I say %s add a %s then I say the name and %s and a %s.", baseWords[0], baseFirstChars[0], fillIns[0], baseWords[1]).nl();
+		add("And then I say the name again with an %s very plain and a %s and a %s.", baseFirstChars[1], fillIns[1], baseWords[2]).nl();
+		add("And then I say the name again with an %s this time", baseFirstChars[2]).nl();
 		add("and there isn't any name I can't rhyme.").np();
 		
 		theNameGame(2).np();
 		
 		add("But if the first two letters are ever the same,").nl();
 		add("I drop them both and say the name like:").nl();
-		add(baseNames[0]).add(", ").add(baseNames[0]).add(" drop the ").baseFirstChar(0).add("'s ").baseWord(0).add(" ").baseSubName(0).add(".").nl();
-		add("For ").add(baseNames[1]).add(", ").add(baseNames[1]).add(" drop the ").baseFirstChar(1).add("'s ").baseWord(1).add(" ").baseSubName(1).add(".").nl();
-		add("For ").add(baseNames[2]).add(", ").add(baseNames[2]).add(" drop the ").baseFirstChar(2).add("'s ").baseWord(2).add(" ").baseSubName(2).add(".").nl();
+		add("%s, %s drop the %s's %s %s.", baseNames[0], baseNames[0], baseFirstChars[0], baseWords[0], getSubName(baseFirstChars[0], baseNames[0])).nl();
+		add("For %s, %s drop the %s's %s %s.", baseNames[1], baseNames[1], baseFirstChars[1], baseWords[1], getSubName(baseFirstChars[1], baseNames[1])).nl();
+		add("For %s, %s drop the %s's %s %s.", baseNames[2], baseNames[2], baseFirstChars[2], baseWords[2], getSubName(baseFirstChars[2], baseNames[2])).nl();
 		add("That's the only rule that is contrary.").np();
 		
 		final String fullName = characters[3];
 		final char firstChar = fullName.charAt(0);
 		final String subName = getSubName(firstChar, fullName);
-		add("Okay? Now say ").baseWord(0).add(": ").baseWord(0).add("!").nl();
-		add("Now ").add(fullName).add(" with a ").baseFirstChar(0).add(": ");
-		subName(baseFirstChars[0], firstChar, subName).add("!").nl();
-		add("Then ").add(fillIns[0]).add(" ").baseWord(1).add(": ").add(fillIns[0]).add(" ").baseWord(1).add("!").nl();
-		add("Then you say the name again with an ").baseFirstChar(1).add(" very plain: ");
-		subName(baseFirstChars[1], firstChar, subName).add("!").nl();
-		add("Then a ").add(fillIns[1]).add(" and a ").baseWord(2).add(": ").add(fillIns[1]).add(" ").baseWord(2).add("!").nl();
-		add("Then say the name again with an ").baseFirstChar(2).add(" this time: ");
-		subName(baseFirstChars[2], firstChar, subName).add("!").nl();
+		add("Okay? Now say %s: %s!", baseWords[0], baseWords[0]).nl();
+		add("Now %s with a %s: %s!", fullName, baseFirstChars[0], getNewName(baseFirstChars[0], firstChar, subName)).nl();
+		add("Then %s %s: %s %s!", fillIns[0], baseWords[1], fillIns[0], baseWords[1]).nl();
+		add("Then you say the name again with an %s very plain: %s!", baseFirstChars[1], getNewName(baseFirstChars[1], firstChar, subName)).nl();
+		add("Then a %s and a %s: %s %s!", fillIns[1], baseWords[2], fillIns[1], baseWords[2]).nl();
+		add("Then say the name again with an %s this time: %s!", baseFirstChars[2], getNewName(baseFirstChars[2], firstChar, subName)).nl();
 		add("And there isn't any name that you can't rhyme.").np();
 		
 		theNameGame(4).np();
@@ -110,35 +112,23 @@ public class TheNameGame
 		final String fullName = characters[baseNameIndex];
 		final char firstChar = fullName.charAt(0);
 		final String subName = getSubName(firstChar, fullName);
-
-		add(fullName).add("! ").add(fullName).add(", ").add(fullName).add(" ").baseWord(0).nl();
-		subName(baseFirstChars[0], firstChar, subName).add(" ").add(fillIns[0]).add(" ").baseWord(1).nl();
-		subName(baseFirstChars[1], firstChar, subName).add(" ").add(fillIns[1]).add(" ").baseWord(2).nl();
-		subName(baseFirstChars[2], firstChar, subName).add(", ").add(fullName).add("!");
+		
+		add("%s! %s, %s %s", fullName, fullName, fullName, baseWords[0]).nl();
+		add("%s %s %s", getNewName(baseFirstChars[0], firstChar, subName), fillIns[0], baseWords[1]).nl();
+		add("%s %s %s", getNewName(baseFirstChars[1], firstChar, subName), fillIns[1], baseWords[2]).nl();
+		add("%s, %s!", getNewName(baseFirstChars[2], firstChar, subName), fullName);
 		return this;
 	}
 	
-	private TheNameGame subName(final char newFirstChar, final char firstChar, final String subName)
-	{
-		song.append(firstChar == newFirstChar ? "" : newFirstChar).append(subName);
-		return this;
-	}
-	
-	private TheNameGame baseFirstChar(final int baseNameIndex)
-	{
-		song.append(baseFirstChars[baseNameIndex]);
-		return this;
-	}
-	
-	private TheNameGame baseWord(final int baseNameIndex)
-	{
-		song.append(baseWords[baseNameIndex]);
-		return this;
-	}
-
 	private TheNameGame add(final String text)
 	{
 		song.append(text);
+		return this;
+	}
+	
+	private TheNameGame add(final String text, final Object... args)
+	{
+		formatter.format(text, args);
 		return this;
 	}
 	
@@ -154,17 +144,16 @@ public class TheNameGame
 		return this;
 	}
 	
-	private TheNameGame baseSubName(final int baseNameIndex)
+	private String getNewName(final char newFirstChar, final char firstChar, final String subName)
 	{
-		song.append(getSubName(baseFirstChars[baseNameIndex], baseNames[baseNameIndex]));
-		return this;
+		return (firstChar == newFirstChar ? "" : newFirstChar) + subName;
 	}
-
+	
 	private String getSubName(final char firstChar, final String fullName)
 	{
 		return fullName.substring(getSubNameIndex(firstChar, fullName)).toLowerCase();
 	}
-
+	
 	private int getSubNameIndex(final char firstChar, final String fullName)
 	{
 		int pos = -1;
