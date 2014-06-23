@@ -2,8 +2,8 @@ The name game
 =============
 
 This happens after some days of illness and watching youtube videos like:
-* http://www.youtube.com/watch?v=GOgNkrQBrdU
-* http://www.youtube.com/watch?v=NeF7jqf0GU4
+* https://www.youtube.com/watch?v=YpuOZXX3XEE
+* https://www.youtube.com/watch?v=NeF7jqf0GU4
 
 So here comes a little abstraction of the name game algorithms for your next karaoke night!
 
