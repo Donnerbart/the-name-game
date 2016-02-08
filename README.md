@@ -2,7 +2,7 @@ The name game
 =============
 
 This happens after some days of illness and watching youtube videos like:
-* https://www.youtube.com/watch?v=YpuOZXX3XEE
+* https://www.youtube.com/watch?v=m2qEhGeLb6A
 * https://www.youtube.com/watch?v=NeF7jqf0GU4
 
 So here comes a little abstraction of the name game algorithms for your next karaoke night!
